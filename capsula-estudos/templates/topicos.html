@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Tópicos de {{ materia.nome }} — Cápsula de Estudos{% endblock %}
+
+{% block content %}
+  <p><a href="{{ url_for('materias') }}">← Voltar para matérias</a></p>
+
+  <div class="page-header">
+    <h1>{{ materia.nome }}</h1>
+    <a href="{{ url_for('novo_topico', materia_id=materia.id) }}" class="link-button">+ Novo tópico</a>
+  </div>
+
+  {% if topicos %}
+    <div class="card-list">
+      {% for topico in topicos %}
+        <div class="card-item topic-item {{ 'topic-done' if topico.status == 'feito' else '' }}">
+          <form method="POST" action="{{ url_for('alternar_status_topico', materia_id=materia.id, topico_id=topico.id) }}">
+            <button type="submit" class="checkbox-button" title="Marcar como {{ 'pendente' if topico.status == 'feito' else 'feito' }}">
+              {% if topico.status == 'feito' %}
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 6L9 17l-5-5"></path>
+                </svg>
+              {% endif %}
+            </button>
+          </form>
+
+          <div class="topic-info">
+            <span class="card-item-title">{{ topico.titulo }}</span>
+            {% if topico.resumo %}
+              <p class="topic-resumo">{{ topico.resumo }}</p>
+            {% endif %}
+            <div class="topic-meta">
+              <span class="badge">Dificuldade {{ topico.dificuldade }}/5</span>
+              {% if topico.data_revisao %}
+                <span class="badge">Revisar em {{ topico.data_revisao }}</span>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="card-item-actions">
+            <a href="{{ url_for('editar_topico', materia_id=materia.id, topico_id=topico.id) }}">Editar</a>
+            <form method="POST" action="{{ url_for('apagar_topico', materia_id=materia.id, topico_id=topico.id) }}"
+                  onsubmit="return confirm('Tem certeza que quer apagar esse tópico?');">
+              <button type="submit" class="link-danger">Apagar</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty-state">Essa matéria ainda não tem tópicos. Crie o primeiro!</p>
+  {% endif %}
+{% endblock %}

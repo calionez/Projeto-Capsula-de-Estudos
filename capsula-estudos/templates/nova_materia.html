@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Nova Matéria — Cápsula de Estudos{% endblock %}
+
+{% block content %}
+  <section class="form-card">
+    <h1>Nova matéria</h1>
+
+    <form method="POST" action="{{ url_for('nova_materia') }}">
+      <label for="nome">Nome da matéria</label>
+      <input type="text" id="nome" name="nome" placeholder="Ex: Biologia" required>
+
+      <button type="submit">Criar matéria</button>
+    </form>
+
+    <p class="form-footer">
+      <a href="{{ url_for('materias') }}">← Voltar para matérias</a>
+    </p>
+  </section>
+{% endblock %}

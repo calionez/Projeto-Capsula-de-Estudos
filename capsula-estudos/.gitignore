@@ -1,0 +1,9 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+database.db
+instance/
+.env
+capsula-estudos.zip
+pyvenv.cfg

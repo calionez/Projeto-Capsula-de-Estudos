@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Cápsula de Estudos{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script>
+    (function () {
+      var temaSalvo = localStorage.getItem("tema") || "light";
+      document.documentElement.setAttribute("data-theme", temaSalvo);
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="{{ url_for('home') }}" class="logo">Cápsula de Estudos</a>
+    <nav>
+      <a href="{{ url_for('home') }}">Início</a>
+      {% if session.user_id %}
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('materias') }}">Matérias</a>
+        <a href="{{ url_for('logout') }}">Sair</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Entrar</a>
+        <a href="{{ url_for('cadastro') }}">Criar conta</a>
+      {% endif %}
+      <button type="button" id="theme-toggle" class="theme-toggle" title="Alternar tema claro/escuro" aria-label="Alternar tema claro/escuro">
+        <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2"></path>
+          <path d="M12 20v2"></path>
+          <path d="M4.93 4.93l1.41 1.41"></path>
+          <path d="M17.66 17.66l1.41 1.41"></path>
+          <path d="M2 12h2"></path>
+          <path d="M20 12h2"></path>
+          <path d="M6.34 17.66l-1.41 1.41"></path>
+          <path d="M19.07 4.93l-1.41 1.41"></path>
+        </svg>
+        <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </nav>
+  </header>
+
+  <main class="container">
+    {% with mensagens = get_flashed_messages() %}
+      {% if mensagens %}
+        <div class="flash-messages">
+          {% for msg in mensagens %}
+            <p class="flash">{{ msg }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

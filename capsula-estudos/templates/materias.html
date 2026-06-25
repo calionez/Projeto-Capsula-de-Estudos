@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Minhas Matérias — Cápsula de Estudos{% endblock %}
+
+{% block content %}
+  <div class="page-header">
+    <h1>Minhas Matérias</h1>
+    <a href="{{ url_for('nova_materia') }}" class="link-button">+ Nova matéria</a>
+  </div>
+
+  {% if materias %}
+    <div class="card-list">
+      {% for materia in materias %}
+        <div class="card-item">
+          <span class="card-item-title">{{ materia.nome }}</span>
+          <div class="card-item-actions">
+            <a href="{{ url_for('topicos', materia_id=materia.id) }}">Ver tópicos</a>
+            <a href="{{ url_for('editar_materia', materia_id=materia.id) }}">Editar</a>
+            <form method="POST" action="{{ url_for('apagar_materia', materia_id=materia.id) }}"
+                  onsubmit="return confirm('Tem certeza que quer apagar essa matéria?');">
+              <button type="submit" class="link-danger">Apagar</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty-state">Você ainda não tem matérias. Crie a primeira!</p>
+  {% endif %}
+{% endblock %}

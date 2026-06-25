@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Matéria — Cápsula de Estudos{% endblock %}
+
+{% block content %}
+  <section class="form-card">
+    <h1>Editar matéria</h1>
+
+    <form method="POST" action="{{ url_for('editar_materia', materia_id=materia.id) }}">
+      <label for="nome">Nome da matéria</label>
+      <input type="text" id="nome" name="nome" value="{{ materia.nome }}" required>
+
+      <button type="submit">Salvar alterações</button>
+    </form>
+
+    <p class="form-footer">
+      <a href="{{ url_for('materias') }}">← Voltar para matérias</a>
+    </p>
+  </section>
+{% endblock %}

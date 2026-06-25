@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — Cápsula de Estudos{% endblock %}
+
+{% block content %}
+  <h1>Olá, {{ nome }}</h1>
+  <p class="subtitle">Aqui está um resumo dos seus estudos.</p>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-number">{{ total_materias }}</span>
+      <span class="stat-label">Matéria(s)</span>
+    </div>
+
+    <div class="stat-card">
+      <span class="stat-number">{{ total_topicos }}</span>
+      <span class="stat-label">Tópico(s) no total</span>
+    </div>
+
+    <div class="stat-card stat-card-warning">
+      <span class="stat-number">{{ topicos_pendentes }}</span>
+      <span class="stat-label">Pendente(s)</span>
+    </div>
+  </div>
+
+  {% if proxima_revisao %}
+    <div class="next-review-card">
+      <span class="next-review-label">Próxima revisão</span>
+      <span class="next-review-title">{{ proxima_revisao.titulo }}</span>
+      <span class="next-review-meta">{{ proxima_revisao.materia_nome }} — {{ proxima_revisao.data_revisao }}</span>
+    </div>
+  {% endif %}
+
+  <p class="dashboard-link"><a href="{{ url_for('materias') }}" class="link-button">Ver minhas matérias</a></p>
+{% endblock %}

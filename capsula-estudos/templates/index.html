@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Cápsula de Estudos — Início{% endblock %}
+
+{% block content %}
+  <section class="hero">
+    <h1>Organize seus estudos em um só lugar</h1>
+    <p>Cadastre suas matérias, divida em tópicos e acompanhe o que já revisou.</p>
+
+    {% if not session.user_id %}
+      <p class="dashboard-link">
+        <a href="{{ url_for('cadastro') }}" class="link-button">Criar conta</a>
+      </p>
+    {% else %}
+      <p class="dashboard-link">
+        <a href="{{ url_for('dashboard') }}" class="link-button">Ir para o dashboard</a>
+      </p>
+    {% endif %}
+  </section>
+{% endblock %}

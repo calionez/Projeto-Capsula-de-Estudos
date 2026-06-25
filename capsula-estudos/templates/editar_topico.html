@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Tópico — Cápsula de Estudos{% endblock %}
+
+{% block content %}
+  <section class="form-card">
+    <h1>Editar tópico</h1>
+
+    <form method="POST" action="{{ url_for('editar_topico', materia_id=materia.id, topico_id=topico.id) }}">
+      <label for="titulo">Título</label>
+      <input type="text" id="titulo" name="titulo" value="{{ topico.titulo }}" required>
+
+      <label for="resumo">Resumo</label>
+      <textarea id="resumo" name="resumo" rows="4">{{ topico.resumo or '' }}</textarea>
+
+      <label for="dificuldade">Dificuldade (1 a 5)</label>
+      <select id="dificuldade" name="dificuldade">
+        {% for n in range(1, 6) %}
+          <option value="{{ n }}" {{ 'selected' if topico.dificuldade == n else '' }}>
+            {{ n }}{% if n == 1 %} - Muito fácil{% elif n == 5 %} - Muito difícil{% endif %}
+          </option>
+        {% endfor %}
+      </select>
+
+      <label for="data_revisao">Data de revisão (opcional)</label>
+      <input type="date" id="data_revisao" name="data_revisao" value="{{ topico.data_revisao or '' }}">
+
+      <button type="submit">Salvar alterações</button>
+    </form>
+
+    <p class="form-footer">
+      <a href="{{ url_for('topicos', materia_id=materia.id) }}">← Voltar para tópicos</a>
+    </p>
+  </section>
+{% endblock %}

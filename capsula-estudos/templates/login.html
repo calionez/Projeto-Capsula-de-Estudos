@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Entrar — Cápsula de Estudos{% endblock %}
+
+{% block content %}
+  <section class="form-card">
+    <h1>Entrar</h1>
+
+    <form method="POST" action="{{ url_for('login') }}">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" name="senha" required>
+
+      <button type="submit">Entrar</button>
+    </form>
+
+    <p class="form-footer">
+      Não tem conta? <a href="{{ url_for('cadastro') }}">Criar conta</a>
+    </p>
+  </section>
+{% endblock %}
